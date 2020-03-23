@@ -1,0 +1,35 @@
+#*** Settings ***
+#Documentation     A test suite containing tests  related to unsuccess create invoice from file without_amount
+#
+#Suite Setup       Login to MP   ${url}    ${EMAIL_LOGIN}
+#...               ${PASSWORD_FOR_NEW_MERCH}   ${SUBMIT_BUTTON}   ${MERCH_PORTAL_PAGE}
+#Suite Teardown    Close Browser
+#Test Template     Create invoice should be failed
+#Test Timeout      60 seconds
+#Default Tags      smoke    invoice
+#Resource          ../resource.txt
+#Resource          ../ui_registration.txt
+#Resource          ../ui_invoices.txt
+#
+#
+#*** Variables ***
+#${url}            https://${SERVER}/mportal/#/account/login
+#${message}        invoices
+#...               File extension '${message}' is not allowed. Allowed extensions are: 'csv'.
+#
+#
+#***Test Cases***              invoice_file           message
+#CreateNotValid - xml         not_valid.xml             xml
+#CreateNotValid - html        not_valid.html           html
+#CreateNotValid - xlsx        not_valid.xlsx           xlsx
+#CreateNotValid - jnlp        not_valid.jnlp           jnlp
+#CreateNotValid - py          not_valid.py             py
+#CreateNotValid - txt         not_valid.txt            txt
+#
+#*** Keywords ***
+#Create invoice should be failed
+#    [Arguments]     ${invoice_file}     ${message}
+#    Choice create invoice from file
+#    Upload invoice file    ${invoice_file}
+#    Assert creating negativ invoice  ${message}
+#

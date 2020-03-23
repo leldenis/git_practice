@@ -1,0 +1,32 @@
+*** Settings ***
+Documentation     A test suite containing tests related to create and pay new invoice
+
+Test Setup        Login to MP   ${url}    ${EMAIL_LOGIN}
+...               ${PASSWORD_FOR_NEW_MERCH}   ${SUBMIT_BUTTON}   ${MERCH_PORTAL_PAGE}
+Test Teardown     Close Browser
+Test Template     Create invoice should be success
+Test Timeout      60 seconds
+Default Tags      smoke    invoice
+Resource          ../resource.txt
+Resource          ../ui_registration.txt
+Resource          ../ui_invoices.txt
+
+
+*** Variables ***
+${url}            https://${SERVER}/mportal/#/account/login
+${message}        INVOICE CREATE
+${status}         positive
+***Test Cases***              mail                       password                mail_type    amount      purpose        lang
+CreateSuccessEN           ${EMAIL_LOGIN}             ${PASSWORD_FOR_NEW_MERCH}    invoice      100      test_purpose      en
+CreateSuccessRU           ${EMAIL_LOGIN}             ${PASSWORD_FOR_NEW_MERCH}    invoice      100      test_purpose      ru
+
+*** Keywords ***
+Create invoice should be success
+    [Arguments]      ${mail}    ${password}    ${mail_type}    ${amount}   ${purpose}    ${lang}
+    Choice and create invoice
+    Input and submit invoice data    ${mail}    ${amount}    ${purpose}    ${status}    ${lang}
+    Assert creating success invoice   ${message}
+    Parse mail and go to url   ${mail_type}     ${lang}
+    update status invoices
+
+

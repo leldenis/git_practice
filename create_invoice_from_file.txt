@@ -1,0 +1,27 @@
+*** Settings ***
+Documentation     A test suite containing tests related to create invoice from file
+
+Suite Setup       Login to MP   ${url}    ${EMAIL_LOGIN}
+...               ${PASSWORD_FOR_NEW_MERCH}   ${SUBMIT_BUTTON}   ${MERCH_PORTAL_PAGE}
+Suite Teardown    Close Browser
+Test Template     Create invoice should be success
+Test Timeout      60 seconds
+Default Tags      smoke    invoice
+Resource          ../resource.txt
+Resource          ../ui_registration.txt
+Resource          ../ui_invoices.txt
+
+
+*** Variables ***
+${url}            https://${SERVER}/mportal/#/account/login
+${message}        INVOICE CREATE
+${invoice_file}   sample.csv
+***Test Cases***         mail                       password                mail_type    amount    purpose
+CreateSuccess           ${EMAIL_LOGIN}             ${PASSWORD_FOR_NEW_MERCH}    invoice      100       test_purpose
+
+*** Keywords ***
+Create invoice should be success
+    [Arguments]      ${mail}    ${password}    ${mail_type}    ${amount}   ${purpose}
+    Choice create invoice from file
+    Upload invoice file    ${invoice_file}
+    Assert creating success invoice   ${message}

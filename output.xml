@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20200102 16:37:26.079" generator="Robot 2.9.1 (Python 2.7.17 on linux2)">
+<suite source="/home/user/PycharmProjects/merchant_portal_tests/invoices/create_invoice_from_file_without_email.txt" id="s1" name="Create Invoice From File Without Email">
+<kw type="setup" name="Login to MP" library="resource">
+<arguments>
+<arg>${url}</arg>
+<arg>${EMAIL_LOGIN}</arg>
+<arg>${PASSWORD_FOR_NEW_MERCH}</arg>
+<arg>${SUBMIT_BUTTON}</arg>
+<arg>${MERCH_PORTAL_PAGE}</arg>
+</arguments>
+<kw name="Open Browser For Empty Page" library="resource">
+<kw name="Open Browser" library="Selenium2Library">
+<doc>Opens a new browser instance to the given ``url``.</doc>
+<arguments>
+<arg>about:blank</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<msg timestamp="20200102 16:37:26.322" level="INFO">Opening browser 'chrome' to base url 'about:blank'.</msg>
+<status status="PASS" endtime="20200102 16:37:28.280" starttime="20200102 16:37:26.304"></status>
+</kw>
+<kw name="Set Browser Implicit Wait" library="Selenium2Library">
+<doc>Sets the implicit wait value used by Selenium.</doc>
+<arguments>
+<arg>5 seconds</arg>
+</arguments>
+<status status="PASS" endtime="20200102 16:37:28.289" starttime="20200102 16:37:28.282"></status>
+</kw>
+<kw name="Maximize Browser Window" library="Selenium2Library">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" endtime="20200102 16:37:28.398" starttime="20200102 16:37:28.289"></status>
+</kw>
+<status status="PASS" endtime="20200102 16:37:28.402" starttime="20200102 16:37:26.303"></status>
+</kw>
+<kw name="Go To" library="Selenium2Library">
+<doc>Navigates the active browser instance to the provided ``url``.</doc>
+<arguments>
+<arg>${url}</arg>
+</arguments>
+<msg timestamp="20200102 16:37:28.403" level="INFO">Opening url 'https://portal-mobile.dev.cipsp.net/mportal/#/account/login'</msg>
+<status status="PASS" endtime="20200102 16:37:29.174" starttime="20200102 16:37:28.402"></status>
+</kw>
+<kw name="delete cookie and set en" library="resource">
+<kw name="Delete Cookie" library="Selenium2Library">
+<doc>Deletes cookie matching ``name``.</doc>
+<arguments>
+<arg>oplang</arg>
+</arguments>
+<status status="PASS" endtime="20200102 16:37:29.302" starttime="20200102 16:37:29.182"></status>
+</kw>
+<kw name="Delete Cookie" library="Selenium2Library">
+<doc>Deletes cookie matching ``name``.</doc>
+<arguments>
+<arg>oplang</arg>
+</arguments>
+<status status="PASS" endtime="20200102 16:37:29.309" starttime="20200102 16:37:29.302"></status>
+</kw>
+<kw name="Delete Cookie" library="Selenium2Library">
+<doc>Deletes cookie matching ``name``.</doc>
+<arguments>
+<arg>oplang</arg>
+</arguments>
+<status status="PASS" endtime="20200102 16:37:29.315" starttime="20200102 16:37:29.309"></status>
+</kw>
+<kw name="Add Cookie" library="Selenium2Library">
+<doc>Adds a cookie to your current session.</doc>
+<arguments>
+<arg>oplang</arg>
+<arg>en</arg>
+</arguments>
+<status status="PASS" endtime="20200102 16:37:29.320" starttime="20200102 16:37:29.315"></status>
+</kw>
+<status status="PASS" endtime="20200102 16:37:29.320" starttime="20200102 16:37:29.175"></status>
+</kw>
+<kw name="Wait Until Element Is Visible" library="Selenium2Library">
+<doc>Waits until element ``locator`` is visible.</doc>
+<arguments>
+<arg>${EMAIL_FIELD}</arg>
+<arg>timeout=15.0</arg>
+</arguments>
+<status status="PASS" endtime="20200102 16:37:31.012" starttime="20200102 16:37:29.320"></status>
+</kw>
+<kw name="Input Text" library="Selenium2Library">
+<doc>Types the given ``text`` into text field identified by ``locator``.</doc>
+<arguments>
+<arg>${EMAIL_FIELD}</arg>
+<arg>${mail}</arg>
+</arguments>
+<msg timestamp="20200102 16:37:31.020" level="INFO">Typing text 'fondylel@gmail.com' into text field 'id=email'.</msg>
+<status status="PASS" endtime="20200102 16:37:31.459" starttime="20200102 16:37:31.016"></status>
+</kw>
+<kw name="Input Text" library="Selenium2Library">
+<doc>Types the given ``text`` into text field identified by ``locator``.</doc>
+<arguments>
+<arg>${PASSWORD_FIELD}</arg>
+<arg>${password}</arg>
+</arguments>
+<msg timestamp="20200102 16:37:31.462" level="INFO">Typing text 'loldenis123' into text field 'id=password'.</msg>
+<status status="PASS" endtime="20200102 16:37:31.787" starttime="20200102 16:37:31.460"></status>
+</kw>
+<kw name="Submit data" library="resource">
+<arguments>
+<arg>${button_identifier}</arg>
+</arguments>
+<kw name="Click Element" library="Selenium2Library">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>${button_identifier}</arg>
+</arguments>
+<msg timestamp="20200102 16:37:31.789" level="INFO">Clicking element 'xpath=//button[@type='submit']'.</msg>
+<status status="PASS" endtime="20200102 16:37:31.906" starttime="20200102 16:37:31.788"></status>
+</kw>
+<status status="PASS" endtime="20200102 16:37:31.906" starttime="20200102 16:37:31.787"></status>
+</kw>
+<kw name="Main page should be opened" library="resource">
+<arguments>
+<arg>${page_identifier}</arg>
+</arguments>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>Wait until element is visible</arg>
+<arg>${page_identifier}</arg>
+<arg>timeout=30.0</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="Selenium2Library">
+<doc>Waits until element ``locator`` is visible.</doc>
+<arguments>
+<arg>${page_identifier}</arg>
+<arg>timeout=30.0</arg>
+</arguments>
+<status status="PASS" endtime="20200102 16:37:31.954" starttime="20200102 16:37:31.909"></status>
+</kw>
+<status status="PASS" endtime="20200102 16:37:31.955" starttime="20200102 16:37:31.908"></status>
+</kw>
+<status status="PASS" endtime="20200102 16:37:31.955" starttime="20200102 16:37:31.907"></status>
+</kw>
+<status status="PASS" endtime="20200102 16:37:31.956" starttime="20200102 16:37:26.302"></status>
+</kw>
+<test id="s1-t1" timeout="1 minute" name="CreateNegative">
+<kw name="Create invoice should be failed">
+<arguments>
+<arg>${EMAIL_LOGIN}</arg>
+<arg>${PASSWORD_FOR_NEW_MERCH}</arg>
+<arg>invoice</arg>
+<arg>100</arg>
+<arg>test_purpose</arg>
+</arguments>
+<kw name="Choice create invoice from file" library="ui_invoices">
+<kw name="Wait Until Element Is Visible" library="Selenium2Library">
+<doc>Waits until element ``locator`` is visible.</doc>
+<arguments>
+<arg>${CHOICE_INVOICE}</arg>
+</arguments>
+<status status="PASS" endtime="20200102 16:37:33.289" starttime="20200102 16:37:31.972"></status>
+</kw>
+<kw name="Click Element" library="Selenium2Library">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>${CHOICE_INVOICE}</arg>
+</arguments>
+<msg timestamp="20200102 16:37:33.291" level="INFO">Clicking element '//i[@class="fa fa-file-text-o"]'.</msg>
+<status status="PASS" endtime="20200102 16:37:33.371" starttime="20200102 16:37:33.289"></status>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<arguments>
+<arg>3x</arg>
+<arg>1sec</arg>
+<arg>wait until element is visible</arg>
+<arg>${INVOICE_FROM_FILE}</arg>
+<arg>timeout=10.0sec</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="Selenium2Library">
+<doc>Waits until element ``locator`` is visible.</doc>
+<arguments>
+<arg>${INVOICE_FROM_FILE}</arg>
+<arg>timeout=10.0sec</arg>
+</arguments>
+<status status="PASS" endtime="20200102 16:37:34.238" starttime="20200102 16:37:33.373"></status>
+</kw>
+<status status="PASS" endtime="20200102 16:37:34.239" starttime="20200102 16:37:33.371"></status>
+</kw>
+<kw name="Click Element" library="Selenium2Library">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>${INVOICE_FROM_FILE}</arg>
+</arguments>
+<msg timestamp="20200102 16:37:34.244" level="INFO">Clicking element '(//a[@href="#/invoices/upload"])[2]'.</msg>
+<status status="PASS" endtime="20200102 16:37:35.723" starttime="20200102 16:37:34.242"></status>
+</kw>
+<status status="PASS" endtime="20200102 16:37:35.725" starttime="20200102 16:37:31.970"></status>
+</kw>
+<kw name="Upload invoice file" library="ui_invoices">
+<arguments>
+<arg>${invoice_file}</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="Selenium2Library">
+<doc>Waits until element ``locator`` appears on current page.</doc>
+<arguments>
+<arg>${ADD_INVOICE_FILE}</arg>
+<arg>timeout=10.0sec</arg>
+</arguments>
+<status status="PASS" endtime="20200102 16:37:36.614" starttime="20200102 16:37:35.732"></status>
+</kw>
+<kw name="Choose File" library="Selenium2Library">
+<doc>Inputs the ``file_path`` into file input field ``locator``.</doc>
+<arguments>
+<arg>${ADD_INVOICE_FILE}</arg>
+<arg>/home/user/PycharmProjects/merchant_portal_tests/${file}</arg>
+</arguments>
+<status status="PASS" endtime="20200102 16:37:36.827" starttime="20200102 16:37:36.619"></status>
+</kw>
+<kw name="Click Button" library="Selenium2Library">
+<doc>Clicks button identified by ``locator``.</doc>
+<arguments>
+<arg>${SUBMIT_BUTTON}</arg>
+</arguments>
+<msg timestamp="20200102 16:37:36.833" level="INFO">Clicking button 'xpath=//button[@type='submit']'.</msg>
+<status status="PASS" endtime="20200102 16:37:37.070" starttime="20200102 16:37:36.828"></status>
+</kw>
+<status status="PASS" endtime="20200102 16:37:37.070" starttime="20200102 16:37:35.726"></status>
+</kw>
+<kw name="Assert creating negativ invoice" library="ui_invoices">
+<arguments>
+<arg>${message}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="Selenium2Library">
+<doc>Waits until element ``locator`` is visible.</doc>
+<arguments>
+<arg>${SUCCES_INVOICE_MESSAGE}</arg>
+</arguments>
+<status status="PASS" endtime="20200102 16:37:37.709" starttime="20200102 16:37:37.075"></status>
+</kw>
+<kw name="Get Text" library="Selenium2Library">
+<doc>Returns the text value of element identified by ``locator``.</doc>
+<arguments>
+<arg>${ERROR_MESSAGE}</arg>
+</arguments>
+<assign>
+<var>${text}</var>
+</assign>
+<kw name="Capture Page Screenshot" library="Selenium2Library">
+<doc>Takes screenshot of the current page and embeds it into log file.</doc>
+<msg timestamp="20200102 16:37:42.983" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-10.png"&gt;&lt;img src="selenium-screenshot-10.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20200102 16:37:42.983" starttime="20200102 16:37:42.756"></status>
+</kw>
+<msg timestamp="20200102 16:37:42.984" level="FAIL">Element with locator '(//ul)[9]' not found.</msg>
+<status status="FAIL" endtime="20200102 16:37:42.984" starttime="20200102 16:37:37.709"></status>
+</kw>
+<status status="FAIL" endtime="20200102 16:37:42.985" starttime="20200102 16:37:37.071"></status>
+</kw>
+<status status="FAIL" endtime="20200102 16:37:42.985" starttime="20200102 16:37:31.961"></status>
+</kw>
+<tags>
+<tag>invoice</tag>
+<tag>smoke</tag>
+</tags>
+<status status="FAIL" endtime="20200102 16:37:42.985" critical="yes" starttime="20200102 16:37:31.956">Element with locator '(//ul)[9]' not found.</status>
+</test>
+<kw type="teardown" name="Close Browser" library="Selenium2Library">
+<doc>Closes the current browser.</doc>
+<status status="PASS" endtime="20200102 16:37:43.048" starttime="20200102 16:37:42.986"></status>
+</kw>
+<doc>A test suite containing tests related to unsuccess create invoice from file without_email</doc>
+<status status="FAIL" endtime="20200102 16:37:43.048" starttime="20200102 16:37:26.080"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="1" pass="0">Critical Tests</stat>
+<stat fail="1" pass="0">All Tests</stat>
+</total>
+<tag>
+<stat fail="1" pass="0">invoice</stat>
+<stat fail="1" pass="0">smoke</stat>
+</tag>
+<suite>
+<stat fail="1" id="s1" name="Create Invoice From File Without Email" pass="0">Create Invoice From File Without Email</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

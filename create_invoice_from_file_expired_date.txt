@@ -1,0 +1,29 @@
+*** Settings ***
+Documentation     A test suite containing tests  related to unsuccess create invoice from file expired
+
+Suite Setup       Login to MP   ${url}    ${EMAIL_LOGIN}
+...               ${PASSWORD_FOR_NEW_MERCH}   ${SUBMIT_BUTTON}   ${MERCH_PORTAL_PAGE}
+Suite Teardown    Close Browser
+Test Template     Create invoice should be failed
+Test Timeout      60 seconds
+Default Tags      smoke    invoice
+Resource          ../resource.txt
+Resource          ../ui_registration.txt
+Resource          ../ui_invoices.txt
+
+
+*** Variables ***
+${url}            https://${SERVER}/mportal/#/account/login
+${message}        timeend
+...               Date must not be before the current date
+${invoice_file}   expired.csv
+
+***Test Cases***         mail                       password                    mail_type    amount    purpose
+CreateNegative           ${EMAIL_LOGIN}             ${PASSWORD_FOR_NEW_MERCH}    invoice      100       test_purpose
+
+*** Keywords ***
+Create invoice should be failed
+    [Arguments]      ${mail}    ${password}    ${mail_type}    ${amount}   ${purpose}
+    Choice create invoice from file
+    Upload invoice file    ${invoice_file}
+    Assert creating negativ invoice  ${message}
