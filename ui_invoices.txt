@@ -1,0 +1,107 @@
+*** Settings ***
+Documentation     Variables used in all tests. Imported one time in resource.txt
+
+
+Resource    resource.txt
+
+*** Variables ***
+#choice invoice
+${CHOICE_INVOICE}                       //i[@class="fa fa-file-text-o"]
+
+#invoice page
+${CREATE_INVOICE}                       (//a[@href="#/invoices/create"])[2]
+${RECIEVER_FIELD}                       css=.tagsinput input[type="email"]
+${ADD_INVOICE_FILE}                     css=.btn.btn-default.btn-file input[type=file]
+${ADD_AMOUNT}                           //input[@name="amount"]
+${ADD_LIFETIME_INVOICE}                 xpath=//input[@type='datetime']
+${ADD_PURPOSE_FIELD}                    //textarea[@name="description"]
+${SELECT_MAIL_LANG}                     name=lang
+${SUBMIT_INVOICE_DATA}                  xpath=//button[@class="btn btn-success"]
+${ASSERT_SUCCESS_INVOICE}               //td[@data-title="Purpose"]
+${SUCCES_INVOICE_MESSAGE}               css=.modal-title.text-uppercase
+${CLOSE_INVOICE_POPUP}                  xpath=.//*[@id='modal']/div/div/div/div[2]/div/button
+${DISABLED_INVOICE_BUTTON}              css=.btn.btn-success.disabled
+${INVOICE_FROM_FILE}                    (//a[@href="#/invoices/upload"])[2]
+${ASSERT_CREATE_INVOICE_FILE}           css=.modal-body p:first-of-type
+${ERROR_MESSAGE}                        (//ul)[9]
+#
+${REMOVE_INVOICE}                       xpath=//button[@data-button='Delete']
+${CONFIRM_REMOVE_INVOICE}               css=.btn.btn-lg.btn-danger
+*** Keywords ***
+
+
+Choice and create invoice
+    Wait until element is visible    ${CHOICE_INVOICE}     timeout=10.0sec
+    Click element    ${CHOICE_INVOICE}
+    Wait until element is visible    ${CREATE_INVOICE}     timeout=10.0sec
+    Click element    ${CREATE_INVOICE}
+    Wait until element is visible   ${SUBMIT_BUTTON}     timeout=10.0sec
+
+Input and submit invoice data
+    [Arguments]    ${mail}    ${amount}    ${purpose}   ${status}    ${lang}
+    Input text    ${RECIEVER_FIELD}    ${mail}
+    Input text    ${ADD_AMOUNT}    ${amount}
+    Input text    ${ADD_PURPOSE_FIELD}    ${purpose}
+    select from list by value     ${SELECT_MAIL_LANG}    ${lang}
+    ${date}=    Get Current Date    	UTC	  + 5 hours
+    ${dates} =	Convert Date    ${date}    result_format=%d.%m.%Y %H:%M
+    Input text    ${ADD_LIFETIME_INVOICE}    ${dates}
+    run keyword if  '${status}'=='positive'    Click element    ${SUBMIT_INVOICE_DATA}
+    ...    ELSE    Element should be visible   ${DISABLED_INVOICE_BUTTON}
+
+Choice invoice
+    Wait until element is visible    ${CHOICE_INVOICE}
+    Click element    ${CHOICE_INVOICE}
+
+Assert creating success invoice
+    [Arguments]    ${message}
+    Wait until element is visible  ${SUCCES_INVOICE_MESSAGE}
+    Element text should be    ${SUCCES_INVOICE_MESSAGE}    ${message}
+    Click element   ${CLOSE_INVOICE_POPUP}
+
+Assert creating negativ invoice
+    [Arguments]    ${message}
+    Wait until element is visible  ${SUCCES_INVOICE_MESSAGE}
+    ${text} =   get text	    ${ERROR_MESSAGE}
+    log     ${text}
+    should be true  '''${text} == ${message}'''
+    Click element   ${CLOSE_INVOICE_POPUP}
+    Reload Page
+
+
+Select invoice
+    [Arguments]    ${desc}
+    Wait until element is visible    ${ASSERT_SUCCESS_INVOICE}
+    Element should contain     ${ASSERT_SUCCESS_INVOICE}    ${desc}
+    Wait until element is visible    //td[contains(text(),'${desc}')]   timeout=10.0sec
+    Wait Until Keyword Succeeds    3x   1sec  Click element     //td[contains(text(),'${desc}')]
+
+
+
+Checking successful removal invoice
+    [Arguments]    ${purpose}
+    element should not be visible   ${ASSERT_SUCCESS_INVOICE}    ${purpose}
+
+Choice create invoice from file
+    Wait until element is visible    ${CHOICE_INVOICE}
+    Click element    ${CHOICE_INVOICE}
+    Wait Until Keyword Succeeds    3x   1sec    wait until element is visible  ${INVOICE_FROM_FILE}     timeout=10.0sec
+    Click element    ${INVOICE_FROM_FILE}
+
+Upload invoice file
+    [Arguments]     ${file}
+    wait until page contains element     ${ADD_INVOICE_FILE}    timeout=10.0sec
+    Choose file      ${ADD_INVOICE_FILE}     ${CURDIR}/${file}
+    click button    ${SUBMIT_BUTTON}
+
+
+Remove invoice
+    Wait until element is visible    ${REMOVE_INVOICE}  timeout=10.0sec
+    Click element      ${REMOVE_INVOICE}
+    Wait until element is visible    ${CONFIRM_REMOVE_INVOICE}  timeout=10.0sec
+    Click element      ${CONFIRM_REMOVE_INVOICE}
+
+
+
+
+
